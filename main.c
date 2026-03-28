@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
@@ -16,8 +17,10 @@ int main()
     printf("Enter your grade:\n");
     scanf(" %c", &grade);
 
+    getchar();
     printf("Enter your name:\n");
-    scanf("%s", &name);
+    fgets(name, sizeof(name), stdin);
+    name[strlen(name)-1] = '\0';
 
     printf("Your age is: %d\n", age);
     printf("Your gpa is: %.2f\n", gpa);

@@ -7,7 +7,7 @@ int random();
 
 int main()
 {
-   random();
+    shopping_cart();
 
     return 0;
 }
@@ -37,6 +37,8 @@ int shopping_cart()
 
     printf("What item would you like to buy?\n");
     fgets(item, sizeof(item), stdin);
+    item[strlen(item) - 1] = '\0'; // get rid of the \n in the end of the input stream
+
 
     printf("What is the price for each?\n");
     scanf("%f", &price);
@@ -46,7 +48,8 @@ int shopping_cart()
 
     total = price * quantity;
 
-    printf("%f", total);
+    printf("\nYou have bought %d %s\n", quantity, item);
+    printf("%c%.2f", currency, total);
 
     return 0;
 }

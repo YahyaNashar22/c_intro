@@ -5,12 +5,24 @@ int intro();
 int shopping_cart();
 int random();
 void mad_libs_game();
+void pointers();
+
+int increment(int *number)
+    {
+		(*number)++;
+	}
 
 int main()
 {
-    mad_libs_game();
-
+    pointers();
     return 0;
+}
+
+void pointers() {
+	int number = 12;
+
+	increment(&number);
+	printf("%d", number);
 }
 
 void mad_libs_game()

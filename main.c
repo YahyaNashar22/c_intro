@@ -8,11 +8,34 @@ void mad_libs_game();
 void pointers();
 void increment(int *number);
 int write_file();
+int read_file();
 
 
 int main()
 {
-    write_file();
+    read_file();
+
+    return 0;
+}
+
+int read_file()
+{
+    FILE *pFile = fopen("output.txt", "r");
+    char buffer[1024] = {0};    
+
+    if (pFile == NULL)
+    {
+       printf("Couldn't open File\n");
+       return 1; 
+    }
+
+    while(fgets(buffer, sizeof(buffer), pFile) != NULL)
+    {
+        printf("%s", buffer);
+    }
+
+    fclose(pFile);
+
     return 0;
 }
 

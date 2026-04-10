@@ -6,23 +6,48 @@ int shopping_cart();
 int random();
 void mad_libs_game();
 void pointers();
+void increment(int *number);
+int write_file();
 
-int increment(int *number)
-    {
-		(*number)++;
-	}
 
 int main()
 {
-    pointers();
+    write_file();
     return 0;
 }
 
-void pointers() {
-	int number = 12;
+int write_file()
+{
+    FILE *pFile = fopen("output.txt", "w");
 
-	increment(&number);
-	printf("%d", number);
+    if(pFile == NULL)
+    {
+        printf("Error opening File\n");
+        return 1;
+    }
+
+    char text[] = "Hello From C";
+
+    fprintf(pFile,"%s", text);
+
+    printf("File was written successfully");
+
+    fclose(pFile);
+
+    return 0;
+}
+
+void increment(int *number)
+{
+    (*number)++;
+}
+
+void pointers()
+{
+    int number = 12;
+
+    increment(&number);
+    printf("%d", number);
 }
 
 void mad_libs_game()
@@ -63,7 +88,7 @@ int random()
 {
     int number = 0;
     int *p = &number;
-    
+
     number = 12;
     printf("%d\n", number);
 
@@ -72,7 +97,7 @@ int random()
 
     printf("%d\n", &number);
     printf("%d\n", *p);
-} 
+}
 
 int shopping_cart()
 {
@@ -85,7 +110,6 @@ int shopping_cart()
     printf("What item would you like to buy?\n");
     fgets(item, sizeof(item), stdin);
     item[strlen(item) - 1] = '\0'; // get rid of the \n in the end of the input stream
-
 
     printf("What is the price for each?\n");
     scanf("%f", &price);
@@ -107,7 +131,7 @@ int intro()
     float gpa = 0.0f;
     char grade = '\0';
     char name[30] = "";
-    
+
     printf("Enter your age:\n");
     scanf("%d", &age);
 
@@ -120,11 +144,10 @@ int intro()
     getchar();
     printf("Enter your name:\n");
     fgets(name, sizeof(name), stdin);
-    name[strlen(name)-1] = '\0';
+    name[strlen(name) - 1] = '\0';
 
     printf("Your age is: %d\n", age);
     printf("Your gpa is: %.2f\n", gpa);
     printf("Your grade is: %c\n", grade);
     printf("Your name is: %s\n", name);
- 
 }

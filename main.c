@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <stdbool.h>
+#include <Windows.h>
 
 int intro();
 int shopping_cart();
@@ -13,10 +16,33 @@ int read_file();
 int try_malloc();
 int try_calloc();
 int try_realloc();
+int digital_clock();
 
 int main()
 {
-    try_realloc();
+    digital_clock();
+
+    return 0;
+}
+
+int digital_clock()
+{
+    time_t rawTime = 0; // Jan 1 1970 ( Epoch )
+    struct tm *pTime = NULL;
+    bool isRunning = true;
+
+    printf("\nDIGITAL CLOCK\n\n");
+
+    while(isRunning)
+    {
+        time(&rawTime);
+
+        pTime = localtime(&rawTime);
+
+        printf("\r%02d:%02d:%02d", (*pTime).tm_hour, (*pTime).tm_min, (*pTime).tm_sec);
+
+        Sleep(1000);
+    }
 
     return 0;
 }

@@ -11,10 +11,52 @@ void increment(int *number);
 int write_file();
 int read_file();
 int try_malloc();
+int try_calloc();
 
 int main()
 {
-    try_malloc();
+    try_calloc();
+
+    return 0;
+}
+
+int try_calloc()
+{
+    int number = 0;
+    printf("Enter the number of players: ");
+    scanf("%d", &number);
+
+    // sets all allocated bytes to 0 ( slower than malloc, but less unexpected behavior )
+    int *scores = calloc(number, sizeof(int));
+
+    if (scores == NULL)
+    {
+        printf("Memory Allocation Failed!\n");
+        return 1;
+    }
+
+    printf("\n## Scores before user assigning each player's score ##\n");
+    for (int i = 0; i < number; i++)
+    {
+        printf("%d ", scores[i]);
+    }
+
+    printf("\n");
+
+    for (int i = 0; i < number; i++)
+    {
+        printf("Enter the score of the #%d player: ", i + 1);
+        scanf("%d", &scores[i]);
+    }
+
+    printf("\n## Scores after user assigning each player's score ##\n");
+    for (int i = 0; i < number; i++)
+    {
+        printf("%d ", scores[i]);
+    }
+
+    free(scores);
+    scores = NULL;
 
     return 0;
 }

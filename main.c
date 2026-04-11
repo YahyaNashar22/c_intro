@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -9,12 +10,52 @@ void pointers();
 void increment(int *number);
 int write_file();
 int read_file();
-
+int try_malloc();
 
 int main()
 {
-    read_file();
+    try_malloc();
 
+    return 0;
+}
+
+int try_malloc()
+{
+    int number = 0;
+    printf("Enter number of grades: ");
+    scanf("%d", &number);
+
+    char *grades = malloc(number * sizeof(char));
+
+    // If number = 5, then malloc(5 * sizeof(char)) allocates space for 5 chars.
+    // grades
+    //   |
+    //   v
+    // +----+----+----+----+----+
+    // | ?  | ?  | ?  | ?  | ?  |
+    // +----+----+----+----+----+
+    //   0    1    2    3    4
+
+    if (grades == NULL)
+    {
+        // avoids segmentation fault
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    for (int i =0; i < number; i++)
+    {
+        printf("Enter Your #%d grade: ", i + 1);
+        scanf(" %c", &grades[i]);
+    }
+
+    for (int i = 0; i < number; i++)
+    {
+        printf("%c ", grades[i]);
+    }
+    
+    free(grades); // returning rented space to the os
+    grades = NULL; // avoids dangling pointers ( pointing to memory not used anymore )
     return 0;
 }
 

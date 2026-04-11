@@ -12,10 +12,73 @@ int write_file();
 int read_file();
 int try_malloc();
 int try_calloc();
+int try_realloc();
 
 int main()
 {
-    try_calloc();
+    try_realloc();
+
+    return 0;
+}
+
+int try_realloc()
+{
+    // realloc -> resize previously allocated memory
+
+    int number = 0;
+    printf("Enter the number of prices: ");
+    scanf("%d", &number);
+
+    float *prices = malloc(number * sizeof(float));
+
+    for (int i = 0; i < number; i++)
+    {
+        printf("Enter price #%d: ", i + 1);
+        scanf("%f", &prices[i]);
+    }
+
+    if (prices == NULL)
+    {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    for (int i = 0; i < number; i++)
+    {
+        printf("%.2f ", prices[i]);
+    }
+
+    int newNumber = 0;
+    printf("\nEnter new number of prices: ");
+    scanf("%d", &newNumber);
+
+    float *temp = realloc(prices, newNumber * sizeof(float));
+    // realloc will also free prev memory.
+
+    if (temp == NULL)
+    {
+        printf("Could not reallocate memory!\n");
+    }
+    else
+    {
+        prices = temp;
+        temp = NULL; // not needed anymore
+
+        // i = number -> continue from where we left off
+        for (int i = number; i < newNumber; i++)
+        {
+            printf("Enter price #%d: ", i + 1);
+            scanf("%f", &prices[i]);
+        }
+
+        for (int i = 0; i < newNumber; i++)
+        {
+            printf("%.2f ", prices[i]);
+        }
+    }
+
+    free(prices);
+    prices = NULL;
 
     return 0;
 }
@@ -85,7 +148,7 @@ int try_malloc()
         return 1;
     }
 
-    for (int i =0; i < number; i++)
+    for (int i = 0; i < number; i++)
     {
         printf("Enter Your #%d grade: ", i + 1);
         scanf(" %c", &grades[i]);
@@ -95,8 +158,8 @@ int try_malloc()
     {
         printf("%c ", grades[i]);
     }
-    
-    free(grades); // returning rented space to the os
+
+    free(grades);  // returning rented space to the os
     grades = NULL; // avoids dangling pointers ( pointing to memory not used anymore )
     return 0;
 }
@@ -104,15 +167,15 @@ int try_malloc()
 int read_file()
 {
     FILE *pFile = fopen("output.txt", "r");
-    char buffer[1024] = {0};    
+    char buffer[1024] = {0};
 
     if (pFile == NULL)
     {
-       printf("Couldn't open File\n");
-       return 1; 
+        printf("Couldn't open File\n");
+        return 1;
     }
 
-    while(fgets(buffer, sizeof(buffer), pFile) != NULL)
+    while (fgets(buffer, sizeof(buffer), pFile) != NULL)
     {
         printf("%s", buffer);
     }
@@ -126,7 +189,7 @@ int write_file()
 {
     FILE *pFile = fopen("output.txt", "w");
 
-    if(pFile == NULL)
+    if (pFile == NULL)
     {
         printf("Error opening File\n");
         return 1;
@@ -134,7 +197,7 @@ int write_file()
 
     char text[] = "Hello From C";
 
-    fprintf(pFile,"%s", text);
+    fprintf(pFile, "%s", text);
 
     printf("File was written successfully");
 
